@@ -1,0 +1,238 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.content-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
+  scroll-behavior: smooth;
+}
+
+/* Sidebar specific styles to append to App.css */
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  /* Removing horizontal padding from container, handling it in items */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  overflow: hidden;
+  border-right: 1px solid var(--glass-border);
+  border-radius: 0;
+  /* Override generic glass-panel radius */
+  z-index: 10;
+}
+
+.sidebar:hover {
+  width: var(--sidebar-expanded-width);
+}
+
+.sidebar-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0;
+  justify-content: center;
+  /* Center logo by default in collapsed */
+  overflow: hidden;
+  /* Ensure text doesn't spill */
+}
+
+/* When expanded, align properly */
+.sidebar:hover .sidebar-header {
+  justify-content: flex-start;
+  padding: 0 1.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  /* gap: 1rem; Remove gap to fix collapsed centering */
+
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--accent-primary);
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-primary);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s, width 0.2s;
+
+  white-space: nowrap;
+}
+
+.sidebar:hover .logo-text {
+  opacity: 1;
+  width: auto;
+  margin-left: 1rem;
+
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  /* gap: 1rem;  Removed gap here, managing via margin on label for smoother animation */
+  padding: 0.75rem;
+
+  border-radius: 8px;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  justify-content: center;
+  /* Center icon when collapsed */
+  margin: 0 0.5rem;
+  /* Add margin for spacing from edges */
+}
+
+.sidebar:hover .nav-item {
+  justify-content: flex-start;
+  /* Align left when expanded */
+  padding: 0.75rem 1rem;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-primary);
+  border-right: 3px solid var(--accent-primary);
+}
+
+.nav-label {
+  opacity: 0;
+  width: 0;
+  /* Remove width when hidden */
+  transition: opacity 0.2s, width 0.2s;
+  overflow: hidden;
+
+}
+
+.sidebar:hover .nav-label {
+  opacity: 1;
+  width: auto;
+  /* Let it grow */
+  margin-left: 1rem;
+  /* Add gap only when expanded */
+
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Spreadsheet / Data Grid Styles */
+.data-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-grid-table th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  /* Sticky header needs opaque background */
+  z-index: 5;
+  padding: 1rem 1.25rem;
+  border-bottom: 2px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.data-grid-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.data-grid-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+  /* Zebra striping */
+}
+
+.data-grid-table tr:hover {
+  background-color: rgba(0, 212, 255, 0.05);
+  cursor: pointer;
+}
+
+.data-grid-table td.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.9em;
+  color: var(--accent-primary);
+}
+
+/* Modal/Drawer Transitions */
+.drawer-enter {
+  transform: translateX(100%);
+}
+
+.drawer-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-exit {
+  transform: translateX(0);
+}
+
+.drawer-exit-active {
+  transform: translateX(100%);
+  transition: transform 200ms ease-in;
+}
