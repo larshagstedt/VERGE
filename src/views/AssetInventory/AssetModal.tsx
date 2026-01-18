@@ -14,7 +14,7 @@ interface AssetModalProps {
 export const AssetModal: React.FC<AssetModalProps> = ({ isOpen, onClose, onSave, initialData, title }) => {
     const [formData, setFormData] = useState<Partial<Asset>>({
         name: '',
-        type: 'Server',
+        type: 'Information',
         ipAddress: '',
         location: '',
         owner: '',
@@ -28,7 +28,7 @@ export const AssetModal: React.FC<AssetModalProps> = ({ isOpen, onClose, onSave,
         } else {
             setFormData({
                 name: '',
-                type: 'Server',
+                type: 'Information',
                 ipAddress: '',
                 location: '',
                 owner: '',

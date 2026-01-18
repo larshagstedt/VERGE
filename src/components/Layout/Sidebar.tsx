@@ -63,10 +63,15 @@ export const Sidebar: React.FC = () => {
                     <Info size={20} />
                     <span className="nav-label">About</span>
                 </NavLink>
-                <button className="nav-item settings-btn">
+                <NavLink
+                    to="/settings"
+                    className={({ isActive }) =>
+                        `nav-item ${isActive ? 'active' : ''}`
+                    }
+                >
                     <Settings size={20} />
                     <span className="nav-label">Settings</span>
-                </button>
+                </NavLink>
             </div>
         </aside>
     );

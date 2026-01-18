@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Asset, AssetType, AssetCriticality, AssetStatus } from '../../types';
-import { X, Save, Trash2 } from 'lucide-react';
+import type { Asset, AssetType, AssetCriticality, AssetStatus } from '../../types';
+import { X, Save, Trash2, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface AssetDrawerProps {
     isOpen: boolean;
@@ -11,6 +12,7 @@ interface AssetDrawerProps {
 }
 
 export const AssetDrawer: React.FC<AssetDrawerProps> = ({ isOpen, onClose, asset, onSave, onDelete }) => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<Partial<Asset>>({});
 
     useEffect(() => {
@@ -53,6 +55,17 @@ export const AssetDrawer: React.FC<AssetDrawerProps> = ({ isOpen, onClose, asset
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-6 space-y-6">
                     <div className="space-y-4">
+                        <button
+                            onClick={() => {
+                                navigate(`/risk?assetId=${asset.id}`);
+                                onClose();
+                            }}
+                            className="w-full flex items-center justify-center gap-2 bg-red-600/10 text-red-400 border border-red-500/20 py-3 rounded-lg hover:bg-red-600/20 transition-all font-bold uppercase tracking-wider text-xs"
+                        >
+                            <Activity size={18} />
+                            View Risk Assessment
+                        </button>
+
                         <div>
                             <label className="block text-sm font-medium text-gray-400 mb-1">Name</label>
                             <input
@@ -110,8 +123,8 @@ export const AssetDrawer: React.FC<AssetDrawerProps> = ({ isOpen, onClose, asset
                                             key={level}
                                             onClick={() => setFormData({ ...formData, criticality: level })}
                                             className={`px-2 py-1 text-xs rounded border transition-all ${formData.criticality === level
-                                                    ? 'bg-[var(--accent-primary)] text-black border-[var(--accent-primary)] font-bold'
-                                                    : 'border-gray-700 text-gray-400 hover:border-gray-500'
+                                                ? 'bg-[var(--accent-primary)] text-black border-[var(--accent-primary)] font-bold'
+                                                : 'border-gray-700 text-gray-400 hover:border-gray-500'
                                                 }`}
                                         >
                                             {level}

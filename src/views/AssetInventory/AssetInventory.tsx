@@ -12,8 +12,7 @@ import {
     Box,
     Activity,
     FileText,
-    Zap,
-    MoreHorizontal
+    Zap
 } from 'lucide-react';
 
 const AssetIcon = ({ type }: { type: string }) => {
@@ -132,32 +131,45 @@ export const AssetInventory: React.FC = () => {
                                 <th className="w-[15%]">Owner</th>
                                 <th className="w-[10%] text-center">Criticality</th>
                                 <th className="w-[10%]">Status</th>
+                                <th className="w-[10%] text-center">Risk</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredAssets.map((asset) => (
-                                <tr key={asset.id} onClick={() => handleRowClick(asset)}>
-                                    <td className="font-medium text-white">
+                                <tr key={asset.id} className="cursor-pointer hover:bg-white/5 transition-colors">
+                                    <td className="font-medium text-white" onClick={() => handleRowClick(asset)}>
                                         {asset.name}
                                         {asset.parentAsset && (
                                             <div className="text-[10px] text-gray-500 mt-0.5">↳ {asset.parentAsset}</div>
                                         )}
                                     </td>
-                                    <td>
+                                    <td onClick={() => handleRowClick(asset)}>
                                         <div className="flex items-center gap-2">
                                             <AssetIcon type={asset.type} />
                                             <span className="text-sm">{asset.type}</span>
                                         </div>
                                     </td>
-                                    <td className="text-gray-400 text-sm">{asset.location}</td>
-                                    <td className="text-gray-400 text-sm">{asset.owner}</td>
-                                    <td className="text-center">
+                                    <td className="text-gray-400 text-sm" onClick={() => handleRowClick(asset)}>{asset.location}</td>
+                                    <td className="text-gray-400 text-sm" onClick={() => handleRowClick(asset)}>{asset.owner}</td>
+                                    <td className="text-center" onClick={() => handleRowClick(asset)}>
                                         <div className="flex justify-center">
                                             <CriticalityDot level={asset.criticality} />
                                         </div>
                                     </td>
-                                    <td>
+                                    <td onClick={() => handleRowClick(asset)}>
                                         <StatusBadge status={asset.status} />
+                                    </td>
+                                    <td className="text-center">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/risk/${asset.id}`);
+                                            }}
+                                            className="p-1.5 rounded-full hover:bg-red-500/20 text-red-400/80 hover:text-red-400 transition-all border border-transparent hover:border-red-500/30"
+                                            title="View Risk Assessment"
+                                        >
+                                            <Activity size={16} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -176,4 +188,3 @@ export const AssetInventory: React.FC = () => {
         </div>
     );
 };
-

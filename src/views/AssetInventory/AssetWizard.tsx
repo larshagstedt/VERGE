@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAssets } from '../../hooks/useAssets';
-import { Asset, AssetType, AssetCriticality } from '../../types';
+import type { Asset, AssetType, AssetCriticality } from '../../types';
 import {
     ArrowLeft,
     ArrowRight,
@@ -46,8 +46,8 @@ export const AssetWizard: React.FC = () => {
         <button
             onClick={() => setFormData({ ...formData, type })}
             className={`p-4 rounded-lg border-2 text-left transition-all hover:scale-[1.02] ${formData.type === type
-                    ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
-                    : 'border-white/10 hover:border-white/30 bg-white/5'
+                ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
+                : 'border-white/10 hover:border-white/30 bg-white/5'
                 }`}
         >
             <div className={`mb-3 w-10 h-10 rounded-full flex items-center justify-center ${formData.type === type ? 'bg-[var(--accent-primary)] text-black' : 'bg-white/10 text-gray-400'
@@ -168,8 +168,8 @@ export const AssetWizard: React.FC = () => {
                                     key={level}
                                     onClick={() => setFormData({ ...formData, criticality: level })}
                                     className={`p-4 rounded-lg border flex items-center justify-between transition-all ${formData.criticality === level
-                                            ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
-                                            : 'border-white/10 hover:border-white/20 bg-transparent'
+                                        ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
+                                        : 'border-white/10 hover:border-white/20 bg-transparent'
                                         }`}
                                 >
                                     <div className="text-left">

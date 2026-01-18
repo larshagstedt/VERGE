@@ -1,26 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark *));
+
+@theme {
+  --color-primary: var(--bg-primary);
+  --color-secondary: var(--bg-secondary);
+  --color-card: var(--bg-card);
+  --color-accent: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-border: var(--border-color);
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 :root {
-  --bg-primary: #0a0c10;
-  --bg-secondary: #161b22;
-  --bg-card: rgba(22, 27, 34, 0.6);
-  --accent-primary: #00d4ff;
-  --accent-glow: rgba(0, 212, 255, 0.3);
-  --accent-secondary: #7928ca;
-  --danger: #ff4d4d;
-  --success: #00e676;
-  --warning: #ffb700;
+  --bg-primary: #f8fafc; /* Slate 50 */
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --accent-primary: #3b82f6; 
+  --accent-glow: rgba(59, 130, 246, 0.2);
+  --accent-secondary: #8b5cf6;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
   
-  --text-primary: #f0f6fc;
-  --text-secondary: #8b949e;
-  --text-muted: #484f58;
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #64748b; /* Slate 500 */
+  --text-muted: #94a3b8; /* Slate 400 */
   
-  --border-color: rgba(240, 246, 252, 0.1);
-  --glass-bg: rgba(13, 17, 23, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --border-color: #e2e8f0; /* Slate 200 */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
   
-  --sidebar-width: 80px; /* Collapsed by default look or just icon based? Requirement says "left pane". Let's make it standard sidebar size. */
+  --sidebar-width: 80px;
   --sidebar-expanded-width: 240px;
+}
+
+.dark {
+  --bg-primary: #020617; /* Slate 950 */
+  --bg-secondary: #0f172a; /* Slate 900 */
+  --bg-card: #1e293b; /* Slate 800 */
+  --accent-primary: #3b82f6;
+  --accent-glow: rgba(59, 130, 246, 0.3);
+  
+  --text-primary: #f1f5f9; /* Slate 100 */
+  --text-secondary: #94a3b8; /* Slate 400 */
+  --text-muted: #64748b; /* Slate 500 */
+  
+  --border-color: #1e293b; /* Slate 800 */
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  
+  color-scheme: dark;
 }
 
 * {
@@ -30,11 +68,8 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Aptos', 'Inter', system-ui, sans-serif;
   background-color: var(--bg-primary);
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(0, 212, 255, 0.08), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(121, 40, 202, 0.08), transparent 25%);
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -93,4 +128,23 @@ a {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+/* React Flow Node Animations for Barriers */
+/* We target the barrier node wrapper to animate position changes */
+.react-flow__node-barrier {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable transition for the node being dragged to prevent lag */
+.react-flow__node-barrier.dragging,
+.react-flow__node-barrier.selected.dragging {
+  transition: none !important;
+  z-index: 100 !important; /* Ensure dragged node stays on top */
+}
+
+/* Disable ALL barrier transitions when a non-barrier node (parent) is being dragged 
+   This fixes the "lag" where barriers trail behind the moving line */
+.disable-barrier-transitions .react-flow__node-barrier {
+  transition: none !important;
 }
